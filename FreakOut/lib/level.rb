@@ -9,9 +9,13 @@ class Level
     x = PADDING
     y = 5
 
-    while (x + Block::WIDTH) < World::WIDTH
-      @blocks << Block.new(x, y)
-      x += (Block::WIDTH + PADDING)
+    3.times do |idx|
+      while (x + Block::WIDTH) < World::WIDTH
+        @blocks << Block.new(x, y)
+        x += (Block::WIDTH + PADDING)
+      end
+      y += Block::HEIGHT + 5
+      x = PADDING
     end
   end
 
