@@ -1,11 +1,10 @@
-require 'pry'
 class Level
   attr_accessor :map, :paddle
   def initialize(size, bricks=[])
     @size = size
     @paddle = Paddle.new(size)
+    @bricks = bricks
     generate_map()
-
   end
 
   def tick(input)
@@ -22,8 +21,12 @@ class Level
 
     # set where paddle is on map
     map = set_paddle(map)
-    
+
     # set all bricks on map
+    @bricks.each do |brick|
+      map = set_brick(map, brick[0], brick[1])
+    end
+
     # set ball
 
     @map = map
@@ -31,9 +34,19 @@ class Level
 
   def set_paddle(map)
     x, y = @paddle.coords
-    map[y][x] = '<'
-    map[y][x + 1] = '='
-    map[y][x + 2] = '>'
+    map[y][x % @size] = '<'
+    map[y][(x + 1) % @size] = '='
+    map[y][(x + 2) % @size] = '>'
+    map
+  end
+
+  def set_brick(map, x, y)
+    map[y][x] = '█'
+    map
+  end
+
+  def set_ball(map, x, y)
+    map[y][x] = 'o'
     map
   end
 
@@ -62,13 +75,11 @@ class Paddle
   end
 end
 
-#
-level = Level.new(15)
+
+bricks = [[10, 3], [7, 3], [4, 3], [4, 4] ,[6, 4],[8, 4], [10, 4]]
+level = Level.new(15, bricks)
 level.draw()
-# sleep(2)
-# level.tick('left')
-# sleep(2)
-# level.tick('left')
+
 loop do
   system("stty raw -echo") #=> Raw mode, no echo
   char = STDIN.read_nonblock(1) rescue nil
@@ -79,7 +90,7 @@ loop do
   elsif char == 'd'
     level.tick ("right")
   elsif char == 'q'
-    system.exit()
+    break
   end
 
   char = nil
