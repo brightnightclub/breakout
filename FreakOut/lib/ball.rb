@@ -3,29 +3,25 @@ class Ball
 
   WHITE = Gosu::Color.new(0xFFFFFFFF)
 
-  def initialize(width = 5, x = World::WIDTH/2, y = 20 )
+  def initialize(window, width = 5, x = World::WIDTH/2, y = World::HEIGHT - 20 )
     @width = width
     @height = width
     @x = x
     @y = y
     @angle = 0.785
+    @ball = Gosu::Image.new(window, "ball.jpg", true)
   end
 
   def draw(window)
-    ball = Gosu::Image.new(window, "ball.jpg", true)
-    ball = Gosu::Image.draw_rot(@x, @y, 1, @angle)
-    ball.draw(@x, @y, 1)
+    @ball.draw_rot(@x, @y, 1, @angle)
   end
 
   def update
-
+    @x += Math.sin(@angle) * 5
+    @y += Math.cos(@angle) * 5
   end
 
   def bounce
-    if @angle < 3
-      @angle = (@angle + 0.785)
-    else
-      @angle = 0.785
-    end
+    @angle += 0.785
   end
 end
