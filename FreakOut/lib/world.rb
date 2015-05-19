@@ -10,10 +10,12 @@ class World < Gosu::Window
     @ball = Ball.new
     @paddle = Paddle.new
     @level = Level.new
-    @ball = Ball.new
   end
 
   def update
+
+    @ball.update
+
     if button_down? Gosu::KbLeft or button_down? Gosu::GpLeft then
       @paddle.left
     end
