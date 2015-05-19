@@ -1,9 +1,18 @@
+require 'pry'
 class Level
   attr_accessor :map, :paddle
   def initialize(size, bricks=[])
     @size = size
     @paddle = Paddle.new(size)
     generate_map()
+
+  end
+
+  def tick(input)
+    system "clear"
+    @paddle.move(input)
+    generate_map()
+    draw()
   end
 
   def generate_map
@@ -13,7 +22,7 @@ class Level
 
     # set where paddle is on map
     map = set_paddle(map)
-
+    
     # set all bricks on map
     # set ball
 
@@ -47,20 +56,31 @@ class Paddle
   def move(input)
     if input == "left"
       @x -= 1
-    else
+    elsif input == "right"
       @x += 1
     end
   end
 end
 
-
+#
 level = Level.new(15)
 level.draw()
-sleep(2)
-level.paddle.move("left")
-level.generate_map()
-level.draw()
-sleep(2)
-level.paddle.move("left")
-level.generate_map()
-level.draw()
+# sleep(2)
+# level.tick('left')
+# sleep(2)
+# level.tick('left')
+loop do
+  system("stty raw -echo") #=> Raw mode, no echo
+  char = STDIN.read_nonblock(1) rescue nil
+  system("stty -raw echo") #=> Reset terminal mode
+
+  if char == 'a'
+    level.tick("left")
+  elsif char == 'd'
+    level.tick ("right")
+  elsif char == 'q'
+    system.exit()
+  end
+
+  char = nil
+end
