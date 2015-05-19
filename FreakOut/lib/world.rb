@@ -13,7 +13,6 @@ class World < Gosu::Window
   end
 
   def update
-
     @ball.update
 
     if button_down? Gosu::KbLeft or button_down? Gosu::GpLeft then
@@ -29,6 +28,10 @@ class World < Gosu::Window
     end
 
     if @level.hit?(@ball)
+      @ball.bounce
+    end
+
+    if @paddle.hit?(@ball)
       @ball.bounce
     end
 
