@@ -2,30 +2,23 @@ class World < Gosu::Window
 
   def initialize
     super(640, 480, false)
-    self.caption = "Gosu Tutorial Game"
+    self.caption = "Breakout!"
 
-    @background_image = Gosu::Image.new(self, "media/Space.png", true)
-
-    @player = Player.new(self)
-    @player.warp(320, 240)
+    @paddle = Paddle.new
+    @level = Level.new
   end
 
   def update
     if button_down? Gosu::KbLeft or button_down? Gosu::GpLeft then
-      @player.turn_left
+      @paddle.left
     end
     if button_down? Gosu::KbRight or button_down? Gosu::GpRight then
-      @player.turn_right
+      @paddle.right
     end
-    if button_down? Gosu::KbUp or button_down? Gosu::GpButton0 then
-      @player.accelerate
-    end
-    @player.move
   end
 
   def draw
-    @player.draw
-    @background_image.draw(0, 0, 0);
+    @paddle.draw
   end
 
   def button_down(id)
