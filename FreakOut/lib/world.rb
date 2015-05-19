@@ -1,7 +1,10 @@
 class World < Gosu::Window
 
+  WIDTH = 640
+  HEIGHT = 480
+
   def initialize
-    super(640, 480, false)
+    super(WIDTH, HEIGHT, false)
     self.caption = "Breakout!"
 
     @paddle = Paddle.new
@@ -18,13 +21,12 @@ class World < Gosu::Window
   end
 
   def draw
-    @paddle.draw
+    @paddle.draw(self)
   end
 
   def button_down(id)
     if id == Gosu::KbEscape
       close
     end
->>>>>>> 79d6250f8b6fbacf93e724b4545d482896b02135
   end
 end

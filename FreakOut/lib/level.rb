@@ -1,2 +1,2 @@
-class level
+class Level
 end

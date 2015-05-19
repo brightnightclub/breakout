@@ -1,2 +1,2 @@
-class block
+class Block
 end
