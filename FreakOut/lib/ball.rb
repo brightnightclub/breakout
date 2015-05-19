@@ -3,7 +3,7 @@ class Ball
 
   WHITE = Gosu::Color.new(0xFFFFFFFF)
 
-  def initialize(window, width = 5, x = World::WIDTH/2, y = World::HEIGHT - 20 )
+  def initialize(window, width = 20, x = World::WIDTH/2, y = World::HEIGHT - 35 )
     @width = width
     @height = width
     @x = x
@@ -13,12 +13,13 @@ class Ball
   end
 
   def draw(window)
-    @ball.draw_rot(@x, @y, 1, @angle)
+    @ball.draw(@x, @y, 1)
   end
 
   def update
     @x += Math.sin(@angle) * 5
     @y += Math.cos(@angle) * 5
+
   end
 
   def bounce

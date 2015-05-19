@@ -9,7 +9,7 @@ class World < Gosu::Window
 
     @ball = Ball.new(self)
     @paddle = Paddle.new
-    @level = Level.new
+    @level = Level.new(self)
   end
 
   def update
@@ -28,10 +28,14 @@ class World < Gosu::Window
     end
 
     if @level.hit?(@ball)
+      @level.last_hit_block = true
+      @level.combo!
       @ball.bounce
     end
 
     if @paddle.hit?(@ball)
+      @level.last_hit_block = false
+      @level.combo = false
       @ball.bounce
     end
 
