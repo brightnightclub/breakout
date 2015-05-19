@@ -1,6 +1,16 @@
 class Ball
+  attr_accessor :x, :y
+
+  WHITE = Gosu::Color.new(0xFFFFFFFF)
+
+  def initialize(width = 5, x = 20, y = 20 )
+    @width = width
+    @x = x
+    @y = y
+  end
 
   def draw(window)
-    window.draw_quad(@x, World::HEIGHT - 20, WHITE, @x + @width, World::HEIGHT - 20, WHITE, @x + @width, World::HEIGHT - 5, WHITE, @x, World::HEIGHT - 5, WHITE)
+    ball = Gosu::Image.new(window, "ball.jpg", true)
+    ball.draw(@x, @y, 1)
   end
 end

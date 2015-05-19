@@ -7,6 +7,7 @@ class World < Gosu::Window
     super(WIDTH, HEIGHT, false)
     self.caption = "Breakout!"
 
+    @ball = Ball.new
     @paddle = Paddle.new
     @level = Level.new
   end
@@ -22,6 +23,7 @@ class World < Gosu::Window
 
   def draw
     @paddle.draw(self)
+    @ball.draw(self)
   end
 
   def button_down(id)
